@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		434238292927AF2200D3D0CA /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434238282927AF2200D3D0CA /* HomepageViewController.swift */; };
+		4342382B2928A15C00D3D0CA /* cardData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4342382A2928A15C00D3D0CA /* cardData.swift */; };
 		4348A45329267C8400FBABE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348A45229267C8400FBABE1 /* AppDelegate.swift */; };
 		4348A45529267C8400FBABE1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348A45429267C8400FBABE1 /* SceneDelegate.swift */; };
 		4348A45729267C8400FBABE1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4348A45629267C8400FBABE1 /* ViewController.swift */; };
 		4348A45A29267C8400FBABE1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4348A45829267C8400FBABE1 /* Main.storyboard */; };
 		4348A45C29267C8500FBABE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4348A45B29267C8500FBABE1 /* Assets.xcassets */; };
 		4348A45F29267C8500FBABE1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4348A45D29267C8500FBABE1 /* LaunchScreen.storyboard */; };
+		43918E5F2928F83F00B653E2 /* initialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43918E5E2928F83F00B653E2 /* initialPageViewController.swift */; };
+		43918E61292908DF00B653E2 /* placeBetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43918E60292908DF00B653E2 /* placeBetViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		434238282927AF2200D3D0CA /* HomepageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
+		4342382A2928A15C00D3D0CA /* cardData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cardData.swift; sourceTree = "<group>"; };
 		4348A44F29267C8400FBABE1 /* Blackjack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blackjack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4348A45229267C8400FBABE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4348A45429267C8400FBABE1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +30,8 @@
 		4348A45B29267C8500FBABE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4348A45E29267C8500FBABE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4348A46029267C8500FBABE1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		43918E5E2928F83F00B653E2 /* initialPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = initialPageViewController.swift; sourceTree = "<group>"; };
+		43918E60292908DF00B653E2 /* placeBetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = placeBetViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +66,12 @@
 			children = (
 				4348A45229267C8400FBABE1 /* AppDelegate.swift */,
 				4348A45429267C8400FBABE1 /* SceneDelegate.swift */,
+				43918E5E2928F83F00B653E2 /* initialPageViewController.swift */,
 				4348A45629267C8400FBABE1 /* ViewController.swift */,
+				4342382A2928A15C00D3D0CA /* cardData.swift */,
 				4348A45829267C8400FBABE1 /* Main.storyboard */,
+				43918E60292908DF00B653E2 /* placeBetViewController.swift */,
+				434238282927AF2200D3D0CA /* HomepageViewController.swift */,
 				4348A45B29267C8500FBABE1 /* Assets.xcassets */,
 				4348A45D29267C8500FBABE1 /* LaunchScreen.storyboard */,
 				4348A46029267C8500FBABE1 /* Info.plist */,
@@ -138,8 +150,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4342382B2928A15C00D3D0CA /* cardData.swift in Sources */,
+				434238292927AF2200D3D0CA /* HomepageViewController.swift in Sources */,
+				43918E5F2928F83F00B653E2 /* initialPageViewController.swift in Sources */,
 				4348A45729267C8400FBABE1 /* ViewController.swift in Sources */,
 				4348A45329267C8400FBABE1 /* AppDelegate.swift in Sources */,
+				43918E61292908DF00B653E2 /* placeBetViewController.swift in Sources */,
 				4348A45529267C8400FBABE1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,6 +311,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -323,6 +340,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
