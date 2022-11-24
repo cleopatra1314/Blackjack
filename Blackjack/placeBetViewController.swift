@@ -30,6 +30,7 @@ class placeBetViewController: UIViewController {
         let controller = HomepageViewController(coder: coder)
         controller?.moneyLeft = moneyLeft
         controller?.betImage = betImage
+        controller?.bet = bet
      
         return controller
     }

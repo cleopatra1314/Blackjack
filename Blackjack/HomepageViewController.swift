@@ -9,6 +9,7 @@ import UIKit
 
 class HomepageViewController: UIViewController {
 
+    //按照發牌的先後，命名 positionImageView 的編號
     @IBOutlet weak var position1ImageView: UIImageView!
     @IBOutlet weak var position2ImageView: UIImageView!
     @IBOutlet weak var position3ImageView: UIImageView!
@@ -31,37 +32,49 @@ class HomepageViewController: UIViewController {
     @IBOutlet weak var playAgainButton: UIButton!
     
     
-    //為什麼無法在外面使用已經宣告好的變數，在 func 裡才行
+    //？為什麼無法在 class closure 內使用已經宣告好的變數，在 func 裡才行
     //let positionImageViewArray = [position1ImageView, position2ImageView, position3ImageView, position4ImageView]
+    //index 為跑迴圈用的編號
     var index = -1
     var playerTotalCardFigure = 0
     var dealerTotalCardFigure = 0
     var playerWin = false
     var dealerWin = false
-    var chip = 0
-    var moneyLeft = 1000
+    
+    
+    //宣告變數給前一個頁面回傳的資料
+    //？Int 要加 !
+    var bet: Int!
+    var moneyLeft: Int!
     var betImage = UIImage()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
         dealCard()
-
     }
     
-//    //將剩餘金額 moneyLeft 傳至 HomepageViewController
-//    @IBSegueAction func passMoneyLeft(_ coder: NSCoder) -> HomepageViewController? {
-//        let controller = HomepageViewController(coder: coder)
-//        controller?.moneyLeft = moneyLeft
-//        
-//        return <#HomepageViewController(coder: coder)#>
-//    }
     
-    
-    //下注完即開始發牌
-    //起始畫面
-    //加 self ?
+    //重置畫面
     func updateUI(){
+        
+        //增加 ImageView 內間距
+        //嘗試一
+//        position1ImageView.image = UIImage().resizableImage(withCapInsets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), resizingMode: .stretch)
+        
+        //嘗試二
+//        position1ImageView.contentMode = .scaleAspectFill
+//        position1ImageView.image = UIImage().withAlignmentRectInsets(UIEdgeInsets(top: -100, left: 10, bottom: 20, right: 20))
+        
+//        let image = UIImage(named: "imagename")!
+//        let imageView = UIImageView(image: image.imageWithInsets(insets: UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)))
+//                imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 400)
+        
+//        let image1 = UIImage(named: "10clubs_j")!
+//        position1ImageView = UIImageView(image: image1.imageWithInsets(insets: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)))
+        
+        //隱藏牌
         position1ImageView.isHidden = true
         position2ImageView.isHidden = true
         position3ImageView.isHidden = true
@@ -73,6 +86,7 @@ class HomepageViewController: UIViewController {
         position9ImageView.isHidden = true
         position10ImageView.isHidden = true
         
+        //讓按鈕還不能點擊
         standButton.isEnabled = false
         hitButton.isEnabled = false
         playAgainButton.isEnabled = false
@@ -81,11 +95,13 @@ class HomepageViewController: UIViewController {
         dealerTotalCardFigureLabel.text = String(dealerTotalCardFigure)
         moneyLeftLabel.text = String(moneyLeft)
         betImageView.image = betImage
-        
     }
     
+    
+    
+    
     //計算牌的點數
-    func countFigure(cardName: String) -> Int{
+    func countFigure(cardName: String, character: String) -> Int{
         if cardName.hasPrefix("2"){
             return 2
         }else if cardName.hasPrefix("3"){
@@ -105,7 +121,19 @@ class HomepageViewController: UIViewController {
         }else if cardName.hasPrefix("10"){
             return 10
         }else{
-            return 11
+            if character == "player" {
+                if (playerTotalCardFigure + 11) <= 21{
+                    return 11
+                }else{
+                    return 1
+                }
+            }else{
+                if (dealerTotalCardFigure + 11) <= 21{
+                    return 11
+                }else{
+                    return 1
+                }
+            }
         }
     }
     
@@ -127,7 +155,7 @@ class HomepageViewController: UIViewController {
         }
     }
     
-    //發牌
+    //下注完即開始發牌
     func dealCard(){
         let positionImageViewArray = [position1ImageView, position2ImageView, position3ImageView, position4ImageView]
         var timerDealcard = Timer()
@@ -139,62 +167,37 @@ class HomepageViewController: UIViewController {
                             positionImageViewArray[index]!.isHidden = false
                             let positionNumber = Int.random(in: 0...(cardDataArray.count - 1))
                             positionImageViewArray[index]!.image = UIImage(named: "\(cardDataArray[positionNumber])")
-                            print(cardDataArray[positionNumber])
-                            playerTotalCardFigure += countFigure(cardName: cardDataArray[positionNumber])
-                            //index += 1
+                            
+                            //var randomImage = UIImage(named: "10clubs_j")!
+//                            positionImageViewArray[index] = UIImageView(image: UIImage(named: "\(cardDataArray[positionNumber])")!.imageWithInsets(insets: UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)))
+                            
+                            playerTotalCardFigure += countFigure(cardName: cardDataArray[positionNumber], character: "player")
                             playerTotalCardFigureLabel.text = String(playerTotalCardFigure)
                             
                             if judge21(figure: playerTotalCardFigure){
                                 flop()
                             }
         
-                            //測試用 print(playerTotalCardFigure)
                         }else if index < (positionImageViewArray.count - 1) && index % 2 != 0{
                             positionImageViewArray[index]!.isHidden = false
                             let positionNumber = Int.random(in: 0...(cardDataArray.count - 1))
                             positionImageViewArray[index]!.image = UIImage(named: "\(cardDataArray[positionNumber])")
                             print(cardDataArray[positionNumber])
-                            dealerTotalCardFigure += countFigure(cardName: cardDataArray[positionNumber])
-                            //index += 1
-                            //print(cpuTotalCardFigure)
+                            dealerTotalCardFigure += countFigure(cardName: cardDataArray[positionNumber], character: "dealer")
                             dealerTotalCardFigureLabel.text = String(dealerTotalCardFigure)
                       
                         }else if index == (positionImageViewArray.count - 1){
-                            print("xxx\(position4ImageView.image)")
                             positionImageViewArray[index]!.isHidden = false
                             positionImageViewArray[index]!.image = UIImage(named: "backRed")
-    
                         }else{
                             standButton.isEnabled = true
                             hitButton.isEnabled = true
                             timerDealcard.invalidate()
                             }
                     }
-        
-        //嘗試二，每張牌沒有間隔時間
-        //        let positionImageViewArray = [position1ImageView, position2ImageView, position3ImageView, position4ImageView]
-        //        for positionImageView in positionImageViewArray{
-        //            var timer = Timer()
-        //            timer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false){(_) in
-        //                let positon = "position\(num)Number"
-        //                let positionNumber = int
-        //                var position1Number = Int.random(in: 2...10)
-        //                positionImageView!.image = UIImage(named: "\(position1Number)_of_clubs")
-        //            }
-        //        }
-                
-        
-        //嘗試一
-        //        for positon in 1...4{
-        //            var timer = Timer()
-        //            timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: false){ (_) in
-        //                positon
-        //            }
-        //        }
-        
     }
     
-    //玩家選擇停牌或是拿牌
+    
     //玩家選擇停牌
     @IBAction func playerStand(_ sender: UIButton) {
         print("4\(position4ImageView.image!)")
@@ -205,16 +208,16 @@ class HomepageViewController: UIViewController {
         print("14\(position4ImageView.image!)")
     }
     
+    
     //玩家選擇拿牌，直到玩家停牌或是牌超過 21 點
     @IBAction func playerHit(_ sender: UIButton) {
         let positionImageViewArray = [position1ImageView, position2ImageView, position3ImageView, position4ImageView, position5ImageView, position6ImageView, position7ImageView]
-        //測試用 print(index)
         
         print("1\(position4ImageView.image!)")
         let positionNumber = Int.random(in: 0...(cardDataArray.count - 1))
         positionImageViewArray[index]?.isHidden = false
         positionImageViewArray[index]?.image = UIImage(named: "\(cardDataArray[positionNumber])")
-        playerTotalCardFigure += countFigure(cardName: cardDataArray[positionNumber])
+        playerTotalCardFigure += countFigure(cardName: cardDataArray[positionNumber], character: "player")
         playerTotalCardFigureLabel.text = String(playerTotalCardFigure)
         index += 1
         
@@ -228,9 +231,8 @@ class HomepageViewController: UIViewController {
             playerWin = true
             flop()
         }
-        //print(playerTotalCardFigure)
-        
     }
+    
     
     //翻開原本蓋著的牌
     func flop(){
@@ -244,7 +246,7 @@ class HomepageViewController: UIViewController {
                 
                 let positionNumber = Int.random(in: 0...(cardDataArray.count - 1))
                 position4ImageView.image = UIImage(named: "\(cardDataArray[positionNumber])")
-                dealerTotalCardFigure += countFigure(cardName: cardDataArray[positionNumber])
+                dealerTotalCardFigure += countFigure(cardName: cardDataArray[positionNumber], character: "dealer")
                 dealerTotalCardFigureLabel.text = String(dealerTotalCardFigure)
 
                 print("7\(position4ImageView.image!)")
@@ -257,12 +259,10 @@ class HomepageViewController: UIViewController {
                     gameover()
                 }
             }else if num == 2{
-                print("10\(position4ImageView.image!)")
                 dealerPlay()
                 timerFlop.invalidate()
             }
         }
-        print("13\(position4ImageView.image!)")
     }
     
         //電腦玩家決定停牌或是拿牌，直到分出勝負
@@ -280,7 +280,7 @@ class HomepageViewController: UIViewController {
                     positionImageViewArray[index]?.isHidden = false
                     positionImageViewArray[index]?.image = UIImage(named: "\(cardDataArray[positionNumber])")
                     
-                    dealerTotalCardFigure += countFigure(cardName: cardDataArray[positionNumber])
+                    dealerTotalCardFigure += countFigure(cardName: cardDataArray[positionNumber], character: "dealer")
                     dealerTotalCardFigureLabel.text = String(dealerTotalCardFigure)
                     
                     if dealerTotalCardFigure > playerTotalCardFigure && dealerTotalCardFigure < 21 {
@@ -288,9 +288,13 @@ class HomepageViewController: UIViewController {
                         dealerWin = true
                         gameover()
                         timerDealerPlay.invalidate()
-                    }else if judge21(figure: dealerTotalCardFigure) && playerWin{
+                    }else if judge21(figure: dealerTotalCardFigure){
                         //resultLabel.text = "Dealer wins."
-                        dealerWin = true
+                        if playerWin{
+                            dealerWin = true
+                        }else{
+                            dealerWin = true
+                        }
                         gameover()
                         timerDealerPlay.invalidate()
                     }else if judgeBust(figure: dealerTotalCardFigure){
@@ -301,6 +305,8 @@ class HomepageViewController: UIViewController {
                     }
                 }else{
                     timerDealerPlay.invalidate()
+                    playerWin = true
+                    gameover()
                 }
             }
         }
@@ -317,15 +323,16 @@ class HomepageViewController: UIViewController {
         if playerWin == true && dealerWin == false{
             //玩家贏
             resultLabel.text = "PLayer wins."
-            moneyLeft += chip * 2
+            moneyLeft += bet * 2
         }else if playerWin == true && dealerWin == true{
             //平手情況
             resultLabel.text = "Push."
-            moneyLeft += chip
+            moneyLeft += bet
         }else{
             //莊家贏
             resultLabel.text = "Dealer wins."
         }
+        moneyLeftLabel.text = String(moneyLeft)
         
 //        perform(Selector("playAgain"), with: nil, afterDelay: 3)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2){
@@ -335,6 +342,19 @@ class HomepageViewController: UIViewController {
     }
     
     //重新開始遊戲
-    
 
+}
+
+extension UIImage {
+    func imageWithInsets(insets: UIEdgeInsets) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(
+            CGSize(width: self.size.width + insets.left + insets.right,
+                   height: self.size.height + insets.top + insets.bottom), false, self.scale)
+        let _ = UIGraphicsGetCurrentContext()
+        let origin = CGPoint(x: insets.left, y: insets.top)
+        self.draw(at: origin)
+        let imageWithInsets = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return imageWithInsets
+    }
 }

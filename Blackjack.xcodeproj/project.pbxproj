@@ -66,10 +66,10 @@
 			children = (
 				4348A45229267C8400FBABE1 /* AppDelegate.swift */,
 				4348A45429267C8400FBABE1 /* SceneDelegate.swift */,
-				43918E5E2928F83F00B653E2 /* initialPageViewController.swift */,
 				4348A45629267C8400FBABE1 /* ViewController.swift */,
 				4342382A2928A15C00D3D0CA /* cardData.swift */,
 				4348A45829267C8400FBABE1 /* Main.storyboard */,
+				43918E5E2928F83F00B653E2 /* initialPageViewController.swift */,
 				43918E60292908DF00B653E2 /* placeBetViewController.swift */,
 				434238282927AF2200D3D0CA /* HomepageViewController.swift */,
 				4348A45B29267C8500FBABE1 /* Assets.xcassets */,
